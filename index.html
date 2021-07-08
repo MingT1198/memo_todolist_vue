@@ -15,7 +15,7 @@
     <div id="app" class="container">
         <div class="row">
             <div class="col text-end">
-                <button type="button" class="btn btn-success" @click="getProduct()">新增</button>
+                <button type="button" class="btn btn-success" @click="getProduct(-1)">新增</button>
             </div>
         </div>
         <table class="table">
@@ -105,20 +105,20 @@
                 close(){
                     this.bsModal.hide()
                 },
-                getProduct(...arg){
-                    if(arg.length>0){
-                        this.product.id = this.products[arg[0]].id;
-                        this.product.name = this.products[arg[0]].name;
-                        this.product.imageUrl = this.products[arg[0]].imageUrl;
-                    }else{
+                getProduct(index){
+                    if(index == -1){
                         let maxId = 1
-                        for(let i=0; i< this.products.length; i++){
+                        for(let i=0; i < this.products.length; i++){
                             if(parseInt(this.products[i].id) > maxId){maxId=parseInt(this.products[i].id)}
                         }
 
-                        this.product.id = maxId+1+'';
+                        this.product.id = (maxId + 1) + '';
                         this.product.name = '';
                         this.product.imageUrl = '';
+                    }else{
+                        this.product.id = this.products[index].id;
+                        this.product.name = this.products[index].name;
+                        this.product.imageUrl = this.products[index].imageUrl;
                     }
                     this.open();
                 },
@@ -127,11 +127,11 @@
                 },
                 updata(){
                     let index = -1
-                    for(let i=0; i< this.products.length; i++){
-                        if(this.products[i].id === this.product.id){index = i}
+                    for(let i=0; i < this.products.length; i++){
+                        if(this.products[i].id == this.product.id){index = i}
                     }
                     
-                    if(index>0){
+                    if(index > -1){
                         this.products[index].name = this.product.name;
                         this.products[index].imageUrl = this.product.imageUrl;
                     }else{
