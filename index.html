@@ -5,11 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>demo</title>
-    <script src="https://unpkg.com/vue"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous" async="async"></script>
-
-    
+    <script src="./js/vue.global.js"></script>
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <script src="./js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div id="app" class="container">
@@ -30,7 +28,7 @@
                 <tr v-for="(p, key) in products" :key="key">
                     <td>{{p.name}}</td>
                     <td>
-                        <img width="200px" class="figure-img img-fluid" :src="p.imageUrl">
+                        <img class="figure-img img-fluid" v-bind="imgOfAttrs"  :src="p.imageUrl">
                     </td>
                     <td>
                         <button type="button" class="btn btn-outline-success" @click="getProduct(key)">修改</button>
@@ -69,21 +67,20 @@
     </div>
 
     <script>
-
         const products = [
             {
                 id: '1',
-                imageUrl: 'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/mbp16touch-space-select-201911_GEO_TW?wid=904&hei=843&fmt=jpeg&qlt=95&.v=1573165435411',
-                name: 'MacBook Pro'
+                imageUrl: 'https://www.apple.com/v/ipad-select/a/images/overview/compare_ipad_10th_gen__u0knphjoh8i6_large.jpg',
+                name: 'iPad'
             },{
                 id: '2',
-                imageUrl: 'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-12-family-select-2021?wid=940&hei=1112&fmt=jpeg&qlt=80&.v=1617135051000',
-                name: 'iPhone 12'
+                imageUrl: 'https://www.apple.com/v/iphone-14/d/images/overview/design/gallery_xdr_blue__e1dgjo6d86eu_large.jpg',
+                name: 'iPhone 14'
             }
         ];
-
-        const app = new Vue({
-            el: '#app',
+        
+        const { createApp } = Vue;
+        createApp({
             data() {
                 return {
                     products,
@@ -92,6 +89,10 @@
                         id:"",
                         name:"",
                         imageUrl:""
+                    },
+                    imgOfAttrs:{
+                        width: 50,
+                        height: 50
                     }
                 }
             },
@@ -140,7 +141,7 @@
                     this.close( )
                 }
             }
-        });
+        }).mount('#app');
     </script>
 </body>
 </html>
